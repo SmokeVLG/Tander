@@ -61,10 +61,13 @@ public class MainActivity extends AppCompatActivity {
                 displayDatabaseInfo();
                 return true;
             case R.id.action_delete_all_entries:
-                // Do nothing for now
                 deleteAll();
                 displayDatabaseInfo();
                 return true;
+
+            case R.id.action_setttings:
+                startActivity(new Intent(this, SettingsActivity.class));
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -80,10 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // Зададим условие для выборки - список столбцов
         String[] projection = {
                 GuestEntry._ID,
-                GuestEntry.COLUMN_NAME,
-                GuestEntry.COLUMN_CITY,
-                GuestEntry.COLUMN_GENDER,
-                GuestEntry.COLUMN_AGE };
+                GuestEntry.COLUMN_COEFFICIENT};
 
         // Делаем запрос
         Cursor cursor = db.query(
@@ -100,31 +100,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             displayTextView.setText("Таблица содержит " + cursor.getCount() + " гостей.\n\n");
             displayTextView.append(GuestEntry._ID + " - " +
-                    GuestEntry.COLUMN_NAME + " - " +
-                    GuestEntry.COLUMN_CITY + " - " +
-                    GuestEntry.COLUMN_GENDER + " - " +
-                    GuestEntry.COLUMN_AGE + "\n");
+                    GuestEntry.COLUMN_COEFFICIENT + "\n");
 
             // Узнаем индекс каждого столбца
             int idColumnIndex = cursor.getColumnIndex(GuestEntry._ID);
-            int nameColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_NAME);
-            int cityColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_CITY);
-            int genderColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_GENDER);
-            int ageColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_AGE);
+            int ageColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_COEFFICIENT);
 
             // Проходим через все ряды
             while (cursor.moveToNext()) {
                 // Используем индекс для получения строки или числа
                 int currentID = cursor.getInt(idColumnIndex);
-                String currentName = cursor.getString(nameColumnIndex);
-                String currentCity = cursor.getString(cityColumnIndex);
-                int currentGender = cursor.getInt(genderColumnIndex);
                 int currentAge = cursor.getInt(ageColumnIndex);
                 // Выводим значения каждого столбца
                 displayTextView.append(("\n" + currentID + " - " +
-                        currentName + " - " +
-                        currentCity + " - " +
-                        currentGender + " - " +
                         currentAge));
             }
         } finally {
@@ -143,15 +131,11 @@ public class MainActivity extends AppCompatActivity {
         // Создаем объект ContentValues, где имена столбцов ключи,
         // а информация о госте является значениями ключей
         ContentValues values = new ContentValues();
-        values.put(GuestEntry.COLUMN_NAME, "Мурзик");
-        values.put(GuestEntry.COLUMN_CITY, "Мурманск");
-        values.put(GuestEntry.COLUMN_GENDER, GuestEntry.GENDER_MALE);
-        values.put(GuestEntry.COLUMN_AGE, 7);
+        int number = 1;
+        values.put(GuestEntry.COLUMN_COEFFICIENT, 7);
 
         long newRowId = db.insert(GuestEntry.TABLE_NAME, null, values);
 
-
-//        Uri newUri = getContentResolver().insert(GuestEntry.CONTENT_URI, values);
     }
 
 
@@ -161,6 +145,6 @@ public class MainActivity extends AppCompatActivity {
     private void deleteAll() {
         // Gets the database in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM guests WHERE _id>0");
+        db.execSQL("DELETE FROM " +GuestEntry.TABLE_NAME+ " WHERE _id>0");
     }
 }

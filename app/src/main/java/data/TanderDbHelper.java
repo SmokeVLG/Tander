@@ -1,5 +1,6 @@
 package data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,7 +17,7 @@ public class TanderDbHelper extends SQLiteOpenHelper {
     /**
      * Имя файла базы данных
      */
-    private static final String DATABASE_NAME = "hotel.db";
+    private static final String DATABASE_NAME = "tander.db";
 
     /**
      * Версия базы данных. При изменении схемы увеличить на единицу
@@ -40,13 +41,19 @@ public class TanderDbHelper extends SQLiteOpenHelper {
         // Строка для создания таблицы
         String SQL_CREATE_GUESTS_TABLE = "CREATE TABLE " + TanderContract.GuestEntry.TABLE_NAME + " ("
                 + TanderContract.GuestEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + TanderContract.GuestEntry.COLUMN_NAME + " TEXT NOT NULL, "
-                + TanderContract.GuestEntry.COLUMN_CITY + " TEXT NOT NULL, "
-                + TanderContract.GuestEntry.COLUMN_GENDER + " INTEGER NOT NULL DEFAULT 3, "
-                + TanderContract.GuestEntry.COLUMN_AGE + " INTEGER NOT NULL DEFAULT 0);";
+                + TanderContract.GuestEntry.COLUMN_COEFFICIENT + " INTEGER NOT NULL DEFAULT 1);";
 
         // Запускаем создание таблицы
         db.execSQL(SQL_CREATE_GUESTS_TABLE);
+
+        //Вставляем 100 записей в БД
+        ContentValues values = new ContentValues();
+        for (int i = 0; i <100 ; i++) {
+            values.put(TanderContract.GuestEntry.COLUMN_COEFFICIENT, 3);
+            long newRowId = db.insert(TanderContract.GuestEntry.TABLE_NAME, null, values);
+        }
+
+
     }
 
     /**
