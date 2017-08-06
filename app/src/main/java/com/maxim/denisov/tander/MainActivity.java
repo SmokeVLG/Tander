@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.GridView;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import data.TanderDbHelper;
 import data.TanderContract.GuestEntry;
@@ -21,23 +22,21 @@ public class MainActivity extends AppCompatActivity {
 
     private TanderDbHelper mDbHelper;
 
+    //GridView gv;
+    GridView gridView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
-                startActivity(intent);
-            }
-        });
-
         mDbHelper = new TanderDbHelper(this);
+        displayDatabaseInfo();
+
+
     }
 
     @Override
@@ -95,27 +94,25 @@ public class MainActivity extends AppCompatActivity {
                 null,                  // Don't filter by row groups
                 null);                   // The sort order
 
-        TextView displayTextView = (TextView) findViewById(R.id.text_view_info);
+        List<Number> numbers = new ArrayList<>();
 
         try {
-            displayTextView.setText("Таблица содержит " + cursor.getCount() + " гостей.\n\n");
-            displayTextView.append(GuestEntry._ID + " - " +
-                    GuestEntry.COLUMN_COEFFICIENT + "\n");
 
             // Узнаем индекс каждого столбца
             int idColumnIndex = cursor.getColumnIndex(GuestEntry._ID);
-            int ageColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_COEFFICIENT);
+            int coefficientColumnIndex = cursor.getColumnIndex(GuestEntry.COLUMN_COEFFICIENT);
 
             // Проходим через все ряды
             while (cursor.moveToNext()) {
                 // Используем индекс для получения строки или числа
                 int currentID = cursor.getInt(idColumnIndex);
-                int currentAge = cursor.getInt(ageColumnIndex);
+                int currentCoefficient = cursor.getInt(coefficientColumnIndex);
                 // Выводим значения каждого столбца
-                displayTextView.append(("\n" + currentID + " - " +
-                        currentAge));
+                numbers.add(new Number(currentID, currentCoefficient));
             }
         } finally {
+            gridView = (GridView) findViewById(R.id.gridView);
+            gridView.setAdapter(new NumberAdapter(this, numbers));
             // Всегда закрываем курсор после чтения
             cursor.close();
         }
