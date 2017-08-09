@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,11 +58,12 @@ public class NumberAdapter extends BaseAdapter {
             grid = (View) convertView;
         }
 
-        ImageView imageView = (ImageView) grid.findViewById(R.id.imagepart);
+        Button button = (Button) grid.findViewById(R.id.button);
         TextView textView = (TextView) grid.findViewById(R.id.textpart);
 
         textView.setText(String.valueOf(id));
-        imageView.setImageResource(R.drawable.ic_pets_black_24dp);
+        button.setText("Моя кнопка");
+        //button.setRatio(0.4f);
 
 
         return grid;

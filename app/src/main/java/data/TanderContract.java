@@ -13,7 +13,6 @@ public final class TanderContract {
 
     public static final class GuestEntry implements BaseColumns {
         public final static String TABLE_NAME = "tander";
-
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_COEFFICIENT = "coefficient";
 
