@@ -63,7 +63,7 @@ public class NumberAdapter extends BaseAdapter {
 
         textView.setText(String.valueOf(id));
         button.setText("Моя кнопка");
-        button.setRatio(0.4f);
+        button.setRatio(numbers.get(id).getCoefficient());
 
         return grid;
     }

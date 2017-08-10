@@ -41,7 +41,7 @@ public class TanderDbHelper extends SQLiteOpenHelper {
         // Строка для создания таблицы
         String SQL_CREATE_GUESTS_TABLE = "CREATE TABLE " + TanderContract.GuestEntry.TABLE_NAME + " ("
                 + TanderContract.GuestEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + TanderContract.GuestEntry.COLUMN_COEFFICIENT + " INTEGER NOT NULL DEFAULT 1);";
+                + TanderContract.GuestEntry.COLUMN_COEFFICIENT + " FLOAT NOT NULL DEFAULT 0);";
 
         // Запускаем создание таблицы
         db.execSQL(SQL_CREATE_GUESTS_TABLE);

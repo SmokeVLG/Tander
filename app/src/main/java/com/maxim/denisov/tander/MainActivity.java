@@ -7,23 +7,24 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import data.TanderContract;
 import data.TanderDbHelper;
 import data.TanderContract.GuestEntry;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TanderDbHelper mDbHelper;
+    public TanderDbHelper mDbHelper;
 
     GridView gridview;
 
@@ -48,7 +49,16 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_setttings:
+                Intent settings = new Intent(getApplicationContext(),SettingsActivity.class);
+                startActivity(settings);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private List<Number> getNumbers() {
         // Создадим и откроем для чтения базу данных
@@ -104,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         currentButton.putExtra("id", child.getText());
         currentButton.putExtra("k", btnChild.getRatio());
         startActivity(currentButton);
-
-
     }
+
+
 }
