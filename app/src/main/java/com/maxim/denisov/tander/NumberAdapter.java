@@ -58,13 +58,12 @@ public class NumberAdapter extends BaseAdapter {
             grid = (View) convertView;
         }
 
-        Button button = (Button) grid.findViewById(R.id.button);
+        ProgressButton button = (ProgressButton) grid.findViewById(R.id.progress_button);
         TextView textView = (TextView) grid.findViewById(R.id.textpart);
 
         textView.setText(String.valueOf(id));
         button.setText("Моя кнопка");
-        //button.setRatio(0.4f);
-
+        button.setRatio(0.4f);
 
         return grid;
     }

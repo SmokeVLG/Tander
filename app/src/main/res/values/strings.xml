@@ -12,6 +12,7 @@
     <string name="gender_unknown">Неизвестно</string>
     <string name="gender_male">Кот</string>
     <string name="gender_female">Кошка</string>
+    <string name="progress_button">Моя кнопка</string>
 
     <string-array name="array_gender_options">
         <item>@string/gender_female</item>

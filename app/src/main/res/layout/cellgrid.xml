@@ -8,14 +8,15 @@
     <TextView
         android:id="@+id/textpart"
         android:layout_width="196dp"
-        android:layout_height="109dp" />
+        android:layout_height="55dp"
+        android:textSize="36sp" />
 
-    <Button
-        android:id="@+id/button"
+    <com.maxim.denisov.tander.ProgressButton
+        android:id="@+id/progress_button"
         android:layout_width="196dp"
-        android:layout_height="83dp"
-        android:layout_weight="1"
-        android:text="Button" />
+        android:layout_height="70dp"
+        android:text="@string/progress_button"
+        android:onClick="onClick"/>
 
 
 </LinearLayout>

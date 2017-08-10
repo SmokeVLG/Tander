@@ -1,6 +1,5 @@
 package com.maxim.denisov.tander;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,8 +7,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -22,8 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TanderDbHelper mDbHelper;
 
-    //GridView gv;
-    GridView gridView;
+    GridView gridview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +36,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mDbHelper = new TanderDbHelper(this);
-        displayDatabaseInfo();
-
+        List<Number> numbers = getNumbers();
+        gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new NumberAdapter(this, numbers));
 
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        displayDatabaseInfo();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -52,30 +48,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_insert_new_data:
-                insertGuest();
-                displayDatabaseInfo();
-                return true;
-            case R.id.action_delete_all_entries:
-                deleteAll();
-                displayDatabaseInfo();
-                return true;
 
-            case R.id.action_setttings:
-                startActivity(new Intent(this, SettingsActivity.class));
 
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /*
-    *Обновить страницу
-    */
-    private void displayDatabaseInfo() {
+    private List<Number> getNumbers() {
         // Создадим и откроем для чтения базу данных
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -111,37 +86,25 @@ public class MainActivity extends AppCompatActivity {
                 numbers.add(new Number(currentID, currentCoefficient));
             }
         } finally {
-            gridView = (GridView) findViewById(R.id.gridView);
-            gridView.setAdapter(new NumberAdapter(this, numbers));
+
             // Всегда закрываем курсор после чтения
             cursor.close();
         }
-    }
-
-    /**
-     * Вспомогательный метод для вставки записи
-     */
-    private void insertGuest() {
-
-        // Gets the database in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        // Создаем объект ContentValues, где имена столбцов ключи,
-        // а информация о госте является значениями ключей
-        ContentValues values = new ContentValues();
-        int number = 1;
-        values.put(GuestEntry.COLUMN_COEFFICIENT, 7);
-
-        long newRowId = db.insert(GuestEntry.TABLE_NAME, null, values);
-
+        return numbers;
     }
 
 
-    /**
-     * Вспомогательный метод для удаления всех записей
-     */
-    private void deleteAll() {
-        // Gets the database in write mode
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM " +GuestEntry.TABLE_NAME+ " WHERE _id>0");
+    public void onClick(View view) {
+        LinearLayout vwParentRow = (LinearLayout)view.getParent();
+
+        TextView child = (TextView)vwParentRow.getChildAt(0);
+        ProgressButton btnChild = (ProgressButton)vwParentRow.getChildAt(1);
+
+        Intent currentButton = new Intent(getApplicationContext(),PropertyActivity.class);
+        currentButton.putExtra("id", child.getText());
+        currentButton.putExtra("k", btnChild.getRatio());
+        startActivity(currentButton);
+
+
     }
 }

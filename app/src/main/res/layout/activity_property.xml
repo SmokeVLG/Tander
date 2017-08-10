@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+        <TextView
+            android:id="@+id/textViewProperty"
+            android:layout_width="210dp"
+            android:layout_height="68dp"
+            android:text="TextView"
+            android:textSize="36sp" />
+
+        <com.maxim.denisov.tander.ProgressButton
+            android:id="@+id/buttonProperty"
+            android:layout_width="163dp"
+            android:layout_height="68dp"
+            android:layout_column="9"
+            android:layout_row="0"
+            android:layout_weight="0.02"
+            android:text="Button" />
+
+</GridLayout>
+
