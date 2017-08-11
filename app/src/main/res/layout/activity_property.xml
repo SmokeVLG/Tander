@@ -6,7 +6,7 @@
     android:weightSum="1">
 
         <TextView
-            android:id="@+id/textViewProperty"
+            android:id="@+id/tVProperty"
             android:layout_width="210dp"
             android:layout_height="68dp"
             android:text="TextView"

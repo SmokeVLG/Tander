@@ -45,8 +45,6 @@ public class NumberAdapter extends BaseAdapter {
 
     @Override
     public View getView(int id, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-
         View grid;
 
         if (convertView == null) {
@@ -62,7 +60,7 @@ public class NumberAdapter extends BaseAdapter {
         TextView textView = (TextView) grid.findViewById(R.id.textpart);
 
         textView.setText(String.valueOf(id));
-        button.setText("Моя кнопка");
+        button.setText("Button");
         button.setRatio(numbers.get(id).getCoefficient());
 
         return grid;

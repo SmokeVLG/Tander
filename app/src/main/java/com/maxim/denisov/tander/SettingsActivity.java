@@ -22,14 +22,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void onClick3(View view) {
 
-        EditText editText3 = (EditText) findViewById(R.id.editText3);
-        String number = String.valueOf(editText3.getText());
-        EditText editText4 = (EditText) findViewById(R.id.editText4);
-        String k = String.valueOf(editText4.getText());
+        EditText eTNumberRaw = (EditText) findViewById(R.id.eTNumberRaw);
+        String numberRaw = String.valueOf(eTNumberRaw.getText());
+        EditText eTK = (EditText) findViewById(R.id.eTK);
+        String k = String.valueOf(eTK.getText());
 
         // Создадим и откроем для чтения базу данных
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        String sql = "UPDATE " + TanderContract.GuestEntry.TABLE_NAME + " SET " + TanderContract.GuestEntry.COLUMN_COEFFICIENT + "=" + k + " WHERE " + TanderContract.GuestEntry._ID + " = " + number;
+        String sql = "UPDATE " + TanderContract.GuestEntry.TABLE_NAME + " SET " + TanderContract.GuestEntry.COLUMN_COEFFICIENT + "=" + k + " WHERE " + TanderContract.GuestEntry._ID + " = " + numberRaw;
         db.execSQL(sql);
 
     }

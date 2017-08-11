@@ -7,7 +7,6 @@ package com.maxim.denisov.tander;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PropertyActivity extends Activity {
@@ -24,7 +23,7 @@ public class PropertyActivity extends Activity {
         float k = intent.getExtras().getFloat("k");
 
 
-        TextView imageView = (TextView) findViewById(R.id.textViewProperty);
+        TextView imageView = (TextView) findViewById(R.id.tVProperty);
         imageView.setText(String.valueOf(position));
 
         ProgressButton b = (ProgressButton) findViewById(R.id.buttonProperty);
